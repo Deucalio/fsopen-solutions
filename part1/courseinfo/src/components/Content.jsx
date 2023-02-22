@@ -1,21 +1,17 @@
-const Part = ({part}) => {
+const Part = ({ part }) => {
   return (
     <p>
       {part.name} {part.exercises}
     </p>
-  )
-}
+  );
+};
 
-const Content = ({
-  part1,
-  part2,
-  part3,
-}) => {
+const Content = ({ parts }) => {
   return (
     <>
-    <Part part={part1}/>
-    <Part part={part2}/>
-    <Part part={part3}/>
+      <Part part={parts[0]} />
+      <Part part={parts[1]} />
+      <Part part={parts[2]} />
     </>
   );
 };
