@@ -18,6 +18,18 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
+  if (good === 0 && neutral === 0 && bad === 0) {
+    return (
+      <>
+        <div>
+          <h1>Give feedback</h1>
+          <Button text="good" handleClick={() => setGood(good + 1)} />
+          <Button text="neutral" handleClick={() => setNeutral(neutral + 1)} />
+          <Button text="bad" handleClick={() => setBad(bad + 1)} />
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div>
@@ -26,7 +38,6 @@ const App = () => {
         <Button text="neutral" handleClick={() => setNeutral(neutral + 1)} />
         <Button text="bad" handleClick={() => setBad(bad + 1)} />
       </div>
-
       <div>
         <h1>statistics</h1>
         <Statistics data={["good", good]} />
