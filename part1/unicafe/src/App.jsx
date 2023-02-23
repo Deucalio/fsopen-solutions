@@ -4,11 +4,35 @@ const Button = ({ text, handleClick }) => {
   return <button onClick={handleClick}>{text}</button>;
 };
 
-const Statistics = ({ data: [text, value] }) => {
+const StatisticsLine = ({ data: [text, value] }) => {
   return (
     <p>
       {text} {value} {text == "positive" && "%"}
     </p>
+  );
+};
+
+const Statistics = ({ good, setGood, neutral, setNeutral, bad, setBad }) => {
+  return (
+    <>
+      <div>
+        <h1>Give feedback</h1>
+        <Button text="good" handleClick={() => setGood(good + 1)} />
+        <Button text="neutral" handleClick={() => setNeutral(neutral + 1)} />
+        <Button text="bad" handleClick={() => setBad(bad + 1)} />
+      </div>
+      <div>
+        <h1>statistics</h1>
+        <StatisticsLine data={["good", good]} />
+        <StatisticsLine data={["neutral", neutral]} />
+        <StatisticsLine data={["bad", bad]} />
+        <StatisticsLine data={["all", good + neutral + bad]} />
+        <StatisticsLine
+          data={["average", (good - bad) / (good + neutral + bad)]}
+        />
+        <StatisticsLine data={["positive", (good / 9) * 100]} />
+      </div>
+    </>
   );
 };
 
@@ -31,23 +55,14 @@ const App = () => {
     );
   }
   return (
-    <>
-      <div>
-        <h1>Give feedback</h1>
-        <Button text="good" handleClick={() => setGood(good + 1)} />
-        <Button text="neutral" handleClick={() => setNeutral(neutral + 1)} />
-        <Button text="bad" handleClick={() => setBad(bad + 1)} />
-      </div>
-      <div>
-        <h1>statistics</h1>
-        <Statistics data={["good", good]} />
-        <Statistics data={["neutral", neutral]} />
-        <Statistics data={["bad", bad]} />
-        <Statistics data={["all", good + neutral + bad]} />
-        <Statistics data={["average", (good - bad) / (good + neutral + bad)]} />
-        <Statistics data={["positive", (good / 9) * 100]} />
-      </div>
-    </>
+    <Statistics
+      good={good}
+      setGood={setGood}
+      neutral={neutral}
+      setNeutral={setNeutral}
+      bad={bad}
+      setBad={setBad}
+    />
   );
 };
 
