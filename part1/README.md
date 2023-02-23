@@ -4,6 +4,6 @@ In this part, we will familiarize ourselves with the React-library while also lo
 
 ## Exercises
 
-- [Unicafe](./unicafe) - WIP
+- [Unicafe](./unicafe) - Simple React app wich collects user feedbacks and renders it
 - [Course Information](./courseinfo) - A very basic React App which displays course information
-- [Anecdotes](./anecdotes) - WIP
+- [Anecdotes](./anecdotes) - App which allows a user to vote on anecdote and then display it
