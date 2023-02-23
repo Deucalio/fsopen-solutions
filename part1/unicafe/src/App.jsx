@@ -20,9 +20,13 @@ const App = () => {
 
       <div>
         <h1>statistics</h1>
-        <h4>good {good}</h4>
-        <h4>neutral {neutral}</h4>
-        <h4>bad {bad}</h4>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+        <p>all {good+neutral+bad}</p>
+        <p>average {(good-bad)/(good+neutral+bad)}</p>
+        <p>positive {(good/9)*100} %</p>
+
       </div>
     </>
   );
