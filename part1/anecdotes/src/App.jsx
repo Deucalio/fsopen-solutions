@@ -37,6 +37,16 @@ const App = () => {
       <p>{anecdotes[selected]}</p>
       <button onClick={randomNumGenerator}>next anecdotes</button>
       <button onClick={voteForAnecdotes}>vote {votes[selected]}</button>
+
+      <h1>Anecdotes with most votes</h1>
+
+      <p>
+        {
+          anecdotes[
+            Object.values(votes).indexOf(Math.max(...Object.values(votes)))
+          ]
+        }
+      </p>
     </div>
   );
 };
