@@ -12,8 +12,17 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setPersons([...persons, {name: newName} ]);
-    setNewName("")
+    // check if the name already exists
+    const userExists =
+      persons.filter((person) => person.name === newName).length === 0
+        ? false
+        : true;
+    if (userExists) {
+      return alert(`${newName} is already added to phonebook`);
+    }
+
+    setPersons([...persons, { name: newName }]);
+    setNewName("");
   };
 
   return (
