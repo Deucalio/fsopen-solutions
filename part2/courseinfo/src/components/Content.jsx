@@ -13,13 +13,13 @@ const Sum = ({ parts }) => {
   return <h3>Total of {sum} exercises</h3>;
 };
 
-const Content = ({ content: { parts } }) => {
+const Content = ({ content }) => {
   return (
     <>
-      {parts.map((p) => (
+      {content.map((p) => (
         <Part key={p.id} part={p} />
       ))}
-      <Sum parts={parts} />
+      <Sum parts={content} />
     </>
   );
 };
