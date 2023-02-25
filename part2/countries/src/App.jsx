@@ -17,9 +17,12 @@ const SearchBar = ({ filterText, setFilterText }) => {
 const DisplayWeatherData = ({ weatherData }) => {
   console.log("weather", weatherData);
   return (
-    <div style={{fontSize: "1.2rem"}}>
+    <div style={{ fontSize: "1.2rem" }}>
       <p>Temperature {weatherData.main.temp} Celcius</p>
-      <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} alt="" />
+      <img
+        src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+        alt=""
+      />
       <p>Wind {weatherData.wind.speed} m/s</p>
     </div>
   );
@@ -107,8 +110,6 @@ const Countries = ({ countries, filterText }) => {
 const App = () => {
   const [filterText, setFilterText] = useState("");
   const [countries, setCountries] = useState([]);
-  console.log("k");
-
   useEffect(() => {
     let ignore = false;
     const fetchCountries = async () => {
