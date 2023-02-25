@@ -14,15 +14,15 @@ const SearchBar = ({ filterText, setFilterText }) => {
   );
 };
 
-const Country = ({ country }) => {
-  return (
-    <span style={{ display: "block", fontFamily: "cursive" }}>
-      {country.name.common}
-    </span>
-  );
-};
-
-const CountryData = ({ country: { name, capital, area, languages, flags: {png} } }) => {
+const CountryData = ({
+  country: {
+    name,
+    capital,
+    area,
+    languages,
+    flags: { png },
+  },
+}) => {
   const languagesList = Object.values(languages);
   return (
     <>
@@ -30,13 +30,28 @@ const CountryData = ({ country: { name, capital, area, languages, flags: {png} }
       <span style={{ display: "block" }}>capital {capital[0]}</span>
       <span style={{ display: "block" }}>area {area}</span>
 
-
       <h4>Languages</h4>
       <ul>
-        {languagesList.map(lang => <li key={lang}>{lang}</li>)}
+        {languagesList.map((lang) => (
+          <li key={lang}>{lang}</li>
+        ))}
       </ul>
-      <br/>
-      <img style={{height: "9rem"}} src={png} alt="" />
+      <br />
+      <img style={{ height: "9rem" }} src={png} alt="" />
+    </>
+  );
+};
+const Country = ({ country }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  return (
+    <>
+      <div style={{ display: "block", fontFamily: "cursive" }}>
+        <span>{country.name.common}</span>{" "}
+        <button onClick={() => setShowDetails(!showDetails)}>
+          {showDetails ? "Hide" : "Show"}
+        </button>
+      </div>
+      {showDetails && <CountryData country={country} />}
     </>
   );
 };
