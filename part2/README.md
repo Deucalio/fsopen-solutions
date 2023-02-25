@@ -4,8 +4,8 @@ In this part we continue our introduction to React, we will be taking a look at 
 
 ## Exercises
 
--  [Course Information](./courseinfo) - WIP
--  [The Phonebook](./phonebook) - <_<
--  [Countries](./countries) - WIP
+-  [Course Information](./courseinfo) - Continues from Part 1, this app displays course information and allows user to provide feedback
+-  [The Phonebook](./phonebook) - This app allows users to add their name and their number
+-  [Countries](./countries) - Renders country's information and allows users to filter countries.
 
 
