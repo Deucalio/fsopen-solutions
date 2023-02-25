@@ -14,6 +14,17 @@ const SearchBar = ({ filterText, setFilterText }) => {
   );
 };
 
+const DisplayWeatherData = ({ weatherData }) => {
+  console.log("weather", weatherData);
+  return (
+    <div style={{fontSize: "1.2rem"}}>
+      <p>Temperature {weatherData.main.temp} Celcius</p>
+      <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} alt="" />
+      <p>Wind {weatherData.wind.speed} m/s</p>
+    </div>
+  );
+};
+
 const CountryData = ({
   country: {
     name,
@@ -24,6 +35,25 @@ const CountryData = ({
   },
 }) => {
   const languagesList = Object.values(languages);
+  const [weatherData, setWeatherData] = useState(null);
+
+  useEffect(() => {
+    let ignore = false;
+    const callWeatherApi = async () => {
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${
+          name.common
+        }&appid=${import.meta.env.VITE_API_KEY}&units=metric`
+      );
+      if (!ignore) {
+        setWeatherData(res.data);
+      }
+    };
+    callWeatherApi();
+
+    return () => (ignore = true);
+  }, []);
+
   return (
     <>
       <h2>{name.common}</h2>
@@ -38,6 +68,9 @@ const CountryData = ({
       </ul>
       <br />
       <img style={{ height: "9rem" }} src={png} alt="" />
+
+      <h2>Weather in {capital[0]}</h2>
+      {weatherData !== null && <DisplayWeatherData weatherData={weatherData} />}
     </>
   );
 };
@@ -74,6 +107,7 @@ const Countries = ({ countries, filterText }) => {
 const App = () => {
   const [filterText, setFilterText] = useState("");
   const [countries, setCountries] = useState([]);
+  console.log("k");
 
   useEffect(() => {
     let ignore = false;
