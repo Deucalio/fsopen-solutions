@@ -31,8 +31,27 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+// fetches every person
 app.get("/api/persons", (req, res) => {
-  res.json(data);
+  res.status(200).json(data);
+});
+
+// fetch a single person
+app.get("/api/:id", (req, res) => {
+  const person = data.find((p) => p.id === Number(req.params.id));
+  if (person){
+      res.status(200).json(person)
+  }else{
+    res.status(404).json({"error": "Person not found"})
+  }
+});
+
+app.get("/info", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.write(`App has info for ${data.length} people`);
+  res.write(`</br>`);
+  res.write(`${new Date()}`);
+  res.end();
 });
 
 app.listen(PORT, () => {
