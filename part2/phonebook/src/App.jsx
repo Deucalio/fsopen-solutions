@@ -55,8 +55,6 @@ const Person = ({ persons, filterText }) => {
     );
   });
 
-  console.log("filteredPeople", filteredPeople);
-
   return <>{filteredPeople}</>;
 };
 
@@ -77,17 +75,17 @@ const App = () => {
     const callApi = async () => {
       const res = await axios.get(`${baseUrl}/api/persons`);
       if (!ignore) {
-        setPersons(res);
+        setPersons(res.data);
       }
     };
-    callApi()
+    callApi();
 
     return () => {
       ignore = true;
     };
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // check if the name already exists
@@ -101,16 +99,22 @@ const App = () => {
 
     setPersons([
       ...persons,
-      { name: newPerson.name, number: newPerson.number },
+      newPerson,
     ]);
+    const res = await axios.post(`${baseUrl}/api/persons`, newPerson)
+    console.log("res",res.data)
     setNewPerson({ name: "", number: "" });
   };
+
+  if (persons === "") {
+    return <p>Loading</p>;
+  }
 
   return (
     <>
       <div>
         <h2>Phonebook</h2>
-{/* 
+
         <SearchBar filterText={filterText} setFilterText={setFilterText} />
 
         <legend>
@@ -123,7 +127,7 @@ const App = () => {
         />
 
         <h2>Numbers</h2>
-        <Person persons={persons} filterText={filterText} /> */}
+        <Person persons={persons} filterText={filterText} />
       </div>
     </>
   );
