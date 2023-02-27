@@ -12,7 +12,10 @@ mongoose.connect(url);
 
 const showAllEntries = async () => {
   const people = await People.find({});
-  console.log(people);
+  console.log("phonebook: ");
+  people.forEach((p) => {
+    console.log(`${p.name} ${p.number}`);
+  });
 };
 
 const createNewEntry = async (name, number) => {
