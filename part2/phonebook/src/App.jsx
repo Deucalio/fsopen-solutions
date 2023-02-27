@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const SearchBar = ({ filterText, setFilterText }) => {
   return (
@@ -60,14 +61,31 @@ const Person = ({ persons, filterText }) => {
 };
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState("");
   const [newPerson, setNewPerson] = useState({ name: "", number: "" });
   const [filterText, setFilterText] = useState("");
+
+  const baseUrl = `http://localhost:3000`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewPerson({ ...newPerson, [name]: value });
   };
+
+  useEffect(() => {
+    let ignore = false;
+    const callApi = async () => {
+      const res = await axios.get(`${baseUrl}/api/persons`);
+      if (!ignore) {
+        setPersons(res);
+      }
+    };
+    callApi()
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -92,7 +110,7 @@ const App = () => {
     <>
       <div>
         <h2>Phonebook</h2>
-
+{/* 
         <SearchBar filterText={filterText} setFilterText={setFilterText} />
 
         <legend>
@@ -105,7 +123,7 @@ const App = () => {
         />
 
         <h2>Numbers</h2>
-        <Person persons={persons} filterText={filterText} />
+        <Person persons={persons} filterText={filterText} /> */}
       </div>
     </>
   );
