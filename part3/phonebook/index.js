@@ -53,7 +53,8 @@ app.get("/api/persons", async (req, res) => {
 });
 
 //  add a new person
-app.post("/api/persons", (req, res) => {
+app.post("/api/persons", async (req, res) => {
+  let data = await People.find({});
   // error handling
   if (!req.body.name) {
     return res.status(400).json({ error: "name missing" });
@@ -67,12 +68,13 @@ app.post("/api/persons", (req, res) => {
   }
 
   const newPerson = {
-    id: Math.max(...data.map((p) => p.id)) + 1,
     name: req.body.name,
     number: req.body.number,
   };
-  data.push(newPerson);
-  res.status(201).json(newPerson);
+  const newEntry = await People.create(newPerson);
+  const addedPerson = await newEntry.save();
+  // data.push(newPerson);
+  res.status(201).json(addedPerson);
 });
 
 // fetch a single person
