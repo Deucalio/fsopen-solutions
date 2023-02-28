@@ -78,8 +78,13 @@ app.post("/api/persons", async (req, res) => {
 });
 
 // fetch a single person
-app.get("/api/:id", (req, res) => {
-  const person = data.find((p) => p.id === Number(req.params.id));
+app.get("/api/persons/:id", async (req, res) => {
+  let person = "";
+  try {
+    person = await People.findById(req.params.id);
+  } catch (err) {
+    console.log(err);
+  }
   if (person) {
     res.status(200).json(person);
   } else {
