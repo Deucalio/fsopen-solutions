@@ -4,6 +4,4 @@ In this part we will focus on backend, implementing functionality on the server 
 
 ## Exercises
 
--  [Phonebook](./phonebook) - WIP
-
-
+- [Phonebook](./phonebook) - Fullstack phonebook app deployed on vercel with backend written in Node.js and express
