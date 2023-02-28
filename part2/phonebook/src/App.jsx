@@ -70,6 +70,21 @@ const App = () => {
     setNewPerson({ ...newPerson, [name]: value });
   };
 
+  const updatePerson = async (id) => {
+    const res = await axios.put(`${baseUrl}/api/${id}`, newPerson);
+    const updatedPerson = res.data;
+    const personsUpdated = persons.map((p) => {
+      if (p._id === updatedPerson._id) {
+        p = updatedPerson;
+        return p;
+      } else {
+        return p;
+      }
+    });
+    setPersons(personsUpdated);
+    setNewPerson({ name: "", number: "" });
+  };
+
   useEffect(() => {
     let ignore = false;
     const callApi = async () => {
@@ -94,15 +109,17 @@ const App = () => {
         ? false
         : true;
     if (userExists) {
-      return alert(`${newPerson.name} is already added to phonebook`);
+      // change his phone number by making http put request to the backend
+      return updatePerson(
+        persons.filter((p) => p.name === newPerson.name)[0]._id
+      );
+
+      // return alert(`${newPerson.name} is already added to phonebook`);
     }
 
-    setPersons([
-      ...persons,
-      newPerson,
-    ]);
-    const res = await axios.post(`${baseUrl}/api/persons`, newPerson)
-    console.log("res",res.data)
+    const res = await axios.post(`${baseUrl}/api/persons`, newPerson);
+    setPersons([...persons, { ...newPerson, _id: res.data._id }]);
+    console.log("res", res.data);
     setNewPerson({ name: "", number: "" });
   };
 
