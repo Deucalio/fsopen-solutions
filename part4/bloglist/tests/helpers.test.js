@@ -79,7 +79,7 @@ const blogs = [
     url: "https://reactpatterns.com/",
     likes: 7,
     __v: 0,
-  }
+  },
 ];
 const listHelper = require("../utils/list_helper");
 
@@ -121,11 +121,19 @@ test("returns the blog with the most likes", () => {
   });
 });
 
-test(`returns the author who has the largest amount of blogs, 
+test(`returns the author who has the largest amount of blogs,
 including the number of blogs he has`, () => {
   const result = listHelper.mostBlogs(blogs);
   expect(result).toEqual({
     author: "Michael Chan",
     blogs: 5,
+  });
+});
+
+test("returns the author who has the most likes", () => {
+  const result = listHelper.mostLikes(blogs);
+  expect(result).toEqual({
+    author: "Michael Chan",
+    likes: 35,
   });
 });
