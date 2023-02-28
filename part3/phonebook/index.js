@@ -88,9 +88,21 @@ app.get("/api/:id", (req, res) => {
 });
 
 // deletes a person
-app.delete("/api/:id", (req, res) => {
-  data = data.filter((p) => p.id !== Number(req.params.id));
+app.delete("/api/:id", async (req, res) => {
+  // data = data.filter((p) => p.id !== Number(req.params.id));
+  const deleteEntry = await People.findByIdAndDelete(req.params.id);
   res.status(204).end();
+});
+
+// update a person
+app.put("/api/:id", async (req, res) => {
+  const newPerson = { name: req.body.name, number: req.body.number };
+  const updatedEntry = await People.findByIdAndUpdate(
+    req.params.id,
+    newPerson,
+    { new: true }
+  );
+  res.json(updatedEntry);
 });
 
 app.get("/info", (req, res) => {
