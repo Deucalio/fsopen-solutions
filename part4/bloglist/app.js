@@ -21,5 +21,10 @@ app.use(express.static("build"));
 app.use(express.json());
 
 app.get("/api/blogs", blogsController.getAllBlogs);
+app.post("/api/blogs", blogsController.postABlog);
+
+app.listen(3001, () => {
+  console.log(`running on port ${3001}`);
+});
 
 module.exports = app;

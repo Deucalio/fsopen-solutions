@@ -8,5 +8,5 @@ exports.getAllBlogs = async (req, res) => {
 exports.postABlog = async (req, res) => {
   const blog = await Blog.create(req.body);
   const newBlog = await blog.save();
-  res.json(newBlog);
+  res.status(201).json(newBlog);
 };
