@@ -15,6 +15,14 @@ exports.postABlog = async (req, res) => {
   res.status(201).json(newBlog);
 };
 
+exports.updateLikes = async (req, res) => {
+  const { id } = req.params;
+  const updatedBlog = await Blog.findByIdAndUpdate(id, {
+    likes: req.body.likes,
+  });
+  res.status(204).end();
+};
+
 exports.deleteABlog = async (req, res) => {
   const { id } = req.params;
   await Blog.findByIdAndDelete(id);
