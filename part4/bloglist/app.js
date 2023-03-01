@@ -22,6 +22,7 @@ app.use(express.json());
 
 app.get("/api/blogs", blogsController.getAllBlogs);
 app.post("/api/blogs", blogsController.postABlog);
+app.delete("/api/blogs/:id", blogsController.deleteABlog);
 
 app.listen(3001, () => {
   console.log(`running on port ${3001}`);

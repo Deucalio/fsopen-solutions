@@ -14,8 +14,8 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/blogs", blogsController.getAllBlogs);
-
 app.post("/api/blogs", blogsController.postABlog);
+app.delete("/api/blogs/:id", blogsController.deleteABlog);
 
 const PORT = 3003;
 app.listen(PORT, () => {
