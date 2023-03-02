@@ -14,7 +14,9 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/blogs", blogsController.getAllBlogs);
+app.get("/api/users", blogsController.getAllUsers);
 app.post("/api/blogs", blogsController.postABlog);
+app.post("/api/users", blogsController.createANewUser);
 app.put("/api/blogs/:id", blogsController.updateLikes);
 app.delete("/api/blogs/:id", blogsController.deleteABlog);
 
