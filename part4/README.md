@@ -4,6 +4,6 @@ In this part, we will continue our work on the backend. Our first major theme wi
 
 ## Exercises
 
--  [Blog list](./bloglist) - Picked up from part 3
+-  [Blog list](./bloglist) - simple express and nodejs app where user can save information from blogs.
 
 
