@@ -4,6 +4,6 @@ In this part, we will continue our work on the backend. Our first major theme wi
 
 ## Exercises
 
--  [Blog list](./bloglist) - WIP
+-  [Blog list](./bloglist) - Picked up from part 3
 
 
