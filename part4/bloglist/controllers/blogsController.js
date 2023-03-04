@@ -17,7 +17,7 @@ exports.getAllBlogs = async (req, res) => {
 };
 
 exports.getAllUsers = async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate("blogs");
   res.status(200).json(users);
 };
 
