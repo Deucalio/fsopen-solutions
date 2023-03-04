@@ -98,6 +98,7 @@ exports.updateLikes = async (req, res) => {
   const updatedBlog = await Blog.findByIdAndUpdate(id, {
     likes: req.body.likes,
   });
+  
   res.status(204).end();
 };
 
