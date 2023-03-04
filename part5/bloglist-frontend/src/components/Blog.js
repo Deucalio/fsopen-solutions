@@ -1,17 +1,33 @@
 import React from "react";
 import { useState } from "react";
-const Blog = ({ blog }) => {
+import axios from "axios";
+const Blog = ({ updateLike, blog }) => {
   const [displayDetails, setDisplayDetails] = useState(false);
+
+  
+
   return (
-    <div style={{ padding: "0.2rem", fontSize: "1.2rem" }}>
+    <div
+      style={{
+        margin: "0.5rem",
+        padding: "0.4rem",
+        fontSize: "1.2rem",
+        border: "1.5px double grey ",
+      }}
+    >
       {blog.title}{" "}
       <button onClick={() => setDisplayDetails(!displayDetails)}>
         {displayDetails ? "hide" : "view"}
       </button>
       {displayDetails && (
         <>
-          <p>{blog.url}</p>
-          <p>likes: {blog.likes}</p>
+          <div>
+            <p>{blog.url}</p>
+            likes: {blog.likes}
+            <button type="button" onClick={() => updateLike(blog.id)}>
+              like
+            </button>
+          </div>
         </>
       )}
     </div>

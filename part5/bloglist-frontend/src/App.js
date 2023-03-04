@@ -97,7 +97,31 @@ const App = () => {
     }
   };
 
-
+  const updateLike = async (blogId) => {
+    const blog = blogs.map((b) => {
+      if (b.id === blogId) {
+        return {
+          ...b,
+          likes: b.likes + 1,
+        };
+      } else {
+        return b;
+      }
+    });
+    console.log("b", blog);
+    setBlogs([...blog]);
+    try {
+      const response = await axios.put(
+        "http://localhost:3003/api/blogs/64031c133b008512cc03a95e",
+        {
+          likes: blogs.find((b) => b.id === blogId).likes + 1,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (user === null) {
     return (
@@ -116,7 +140,10 @@ const App = () => {
       <h3 style={{ display: "inline" }}>{name} logged in</h3>
       <button onClick={logOut}>logout</button>
       <br />
-      <button type="button" onClick={() => setDisplayBlogForm(!displayBlogForm)}>
+      <button
+        type="button"
+        onClick={() => setDisplayBlogForm(!displayBlogForm)}
+      >
         {displayBlogForm ? "cancel" : "new blog"}
       </button>
 
@@ -131,7 +158,7 @@ const App = () => {
       <br />
 
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog updateLike={updateLike} key={blog.id} blog={blog} />
       ))}
     </div>
   );
