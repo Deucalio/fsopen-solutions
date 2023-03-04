@@ -17,6 +17,7 @@ const App = () => {
     author: "",
     url: "",
   });
+  const [notification, setNotification] = useState(false);
   const [blogs, setBlogs] = useState([]);
 
   const getBlogs = async (username) => {
@@ -37,6 +38,12 @@ const App = () => {
       console.log("doesn't exists");
     }
   }, [user]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setNotification(false);
+    }, 3000);
+  }, [notification]);
 
   const handleLoginForm = async (e) => {
     e.preventDefault();
@@ -62,7 +69,8 @@ const App = () => {
   };
 
   const createBlog = async (e) => {
-    e.preventDefault()
+    setNotification(true);
+    e.preventDefault();
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -82,7 +90,7 @@ const App = () => {
         }
       );
       console.log(response.data);
-      setBlogs([...blogs, response.data])
+      setBlogs([...blogs, response.data]);
     } catch (error) {
       console.log(error);
     }
@@ -100,12 +108,17 @@ const App = () => {
 
   return (
     <div>
+      {notification && <h1>A new blog has been added</h1>}
       <h2>blogs</h2>
       <h3>{name} logged in</h3>
       <button onClick={logOut}>logout</button>
 
       {/* allow user to create new blog */}
-      <Form createBlog={createBlog} blogForm={blogForm} setBlogForm={setBlogForm} />
+      <Form
+        createBlog={createBlog}
+        blogForm={blogForm}
+        setBlogForm={setBlogForm}
+      />
       <br />
 
       {blogs.map((blog) => (
