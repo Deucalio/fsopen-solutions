@@ -108,7 +108,6 @@ const App = () => {
         return b;
       }
     });
-    console.log("b", blog);
     setBlogs([...blog]);
     try {
       const response = await axios.put(
@@ -117,10 +116,18 @@ const App = () => {
           likes: blogs.find((b) => b.id === blogId).likes + 1,
         }
       );
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const sortByLikes = () => {
+    const sortedBlogs = [...blogs].sort(function (a, b) {
+      if (a.likes > b.likes) return -1;
+      if (a.likes < b.likes) return 1;
+      return 0;
+    });
+    setBlogs(sortedBlogs);
   };
 
   if (user === null) {
@@ -145,6 +152,9 @@ const App = () => {
         onClick={() => setDisplayBlogForm(!displayBlogForm)}
       >
         {displayBlogForm ? "cancel" : "new blog"}
+      </button>
+      <button type="button" onClick={sortByLikes}>
+        Sort by likes
       </button>
 
       {/* allow user to create new blog */}
