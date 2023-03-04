@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import Login from "./components/Login";
+import Form from "./components/Form";
 import axios from "axios";
 
 const App = () => {
@@ -10,6 +11,11 @@ const App = () => {
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
+  });
+  const [blogForm, setBlogForm] = useState({
+    title: "",
+    author: "",
+    url: "",
   });
   const [blogs, setBlogs] = useState([]);
 
@@ -51,9 +57,36 @@ const App = () => {
   };
 
   const logOut = () => {
-    localStorage.clear()
-    setUser(null)
-  }
+    localStorage.clear();
+    setUser(null);
+  };
+
+  const createBlog = async (e) => {
+    e.preventDefault()
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    };
+
+    const data = JSON.stringify({
+      ...blogForm,
+      likes: 0,
+    });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3003/api/blogs",
+        data,
+        {
+          headers: headers,
+        }
+      );
+      console.log(response.data);
+      setBlogs([...blogs, response.data])
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (user === null) {
     return (
@@ -70,6 +103,11 @@ const App = () => {
       <h2>blogs</h2>
       <h3>{name} logged in</h3>
       <button onClick={logOut}>logout</button>
+
+      {/* allow user to create new blog */}
+      <Form createBlog={createBlog} blogForm={blogForm} setBlogForm={setBlogForm} />
+      <br />
+
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
