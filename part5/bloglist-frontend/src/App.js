@@ -17,6 +17,7 @@ const App = () => {
     author: "",
     url: "",
   });
+  const [displayBlogForm, setDisplayBlogForm] = useState(false);
   const [notification, setNotification] = useState(false);
   const [blogs, setBlogs] = useState([]);
 
@@ -96,6 +97,8 @@ const App = () => {
     }
   };
 
+
+
   if (user === null) {
     return (
       <Login
@@ -110,15 +113,21 @@ const App = () => {
     <div>
       {notification && <h1>A new blog has been added</h1>}
       <h2>blogs</h2>
-      <h3>{name} logged in</h3>
+      <h3 style={{ display: "inline" }}>{name} logged in</h3>
       <button onClick={logOut}>logout</button>
+      <br />
+      <button type="button" onClick={() => setDisplayBlogForm(!displayBlogForm)}>
+        {displayBlogForm ? "cancel" : "new blog"}
+      </button>
 
       {/* allow user to create new blog */}
-      <Form
-        createBlog={createBlog}
-        blogForm={blogForm}
-        setBlogForm={setBlogForm}
-      />
+      {displayBlogForm && (
+        <Form
+          createBlog={createBlog}
+          blogForm={blogForm}
+          setBlogForm={setBlogForm}
+        />
+      )}
       <br />
 
       {blogs.map((blog) => (
