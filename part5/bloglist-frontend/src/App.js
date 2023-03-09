@@ -130,8 +130,19 @@ const App = () => {
     setBlogs(sortedBlogs);
   };
 
+  const deleteBlog = async (id) => {
+    // console.log("id",id)
+    // alert("Are you sure you want that delete this blog", "yes")
+    if (window.confirm("Are you sure you want this blog removed?")) {
+      // remove it
+      setBlogs(blogs.filter(b => b.id !== id))
+      const req = await axios.delete(`http://localhost:3003/api/blogs/${id}`)
+      console.log(req.data)
+    } else {
+      return 0;
+    }
+  };
 
-  
   if (user === null) {
     return (
       <Login
@@ -170,7 +181,12 @@ const App = () => {
       <br />
 
       {blogs.map((blog) => (
-        <Blog updateLike={updateLike} key={blog.id} blog={blog} />
+        <Blog
+          deleteBlog={deleteBlog}
+          updateLike={updateLike}
+          key={blog.id}
+          blog={blog}
+        />
       ))}
     </div>
   );
