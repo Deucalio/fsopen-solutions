@@ -12,13 +12,13 @@ const Form = ({ createBlog, blogForm, setBlogForm }) => {
       <form>
         <h1>create new</h1>
         <label>title</label>{" "}
-        <input onChange={handleChange} name="title" type="text"></input>
+        <input aria-label="title" onChange={handleChange} name="title" type="text"></input>
         <br />
         <label>author</label>{" "}
-        <input onChange={handleChange} name="author" type="text"></input>
+        <input aria-label="author" onChange={handleChange} name="author" type="text"></input>
         <br />
         <label>url</label>{" "}
-        <input onChange={handleChange} name="url" type="text"></input>
+        <input aria-label="url" onChange={handleChange} name="url" type="text"></input>
         <br />
         <button onClick={createBlog} type="submit">
           create

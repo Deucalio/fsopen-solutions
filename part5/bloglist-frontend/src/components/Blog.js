@@ -14,7 +14,7 @@ const Blog = ({ deleteBlog, updateLike, blog }) => {
       }}
     >
       {blog.title}{" "}
-      <button onClick={() => setDisplayDetails(!displayDetails)}>
+      <button className="displayInfo" onClick={() => setDisplayDetails(!displayDetails)}>
         {displayDetails ? "hide" : "view"}
       </button>
       {displayDetails && (
