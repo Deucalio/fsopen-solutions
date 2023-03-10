@@ -22,10 +22,10 @@ const Blog = ({ deleteBlog, updateLike, blog }) => {
           <div>
             <p>{blog.url}</p>
             likes: {blog.likes}
-            <button type="button" onClick={() => updateLike(blog.id)}>
+            <button id="likeBtn" type="button" onClick={() => updateLike(blog.id)}>
               like
             </button>
-            <button
+            <button id="removeBtn"
               onClick={() => deleteBlog(blog.id)}
               style={{
                 cursor: "pointer",

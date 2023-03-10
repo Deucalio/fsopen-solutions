@@ -166,7 +166,7 @@ const App = () => {
       >
         {displayBlogForm ? "cancel" : "new blog"}
       </button>
-      <button type="button" onClick={sortByLikes}>
+      <button id="sortBtn" type="button" onClick={sortByLikes}>
         Sort by likes
       </button>
 
