@@ -6,7 +6,7 @@ const Login = ({ handleLoginForm, loginFormData, setLoginFormData }) => {
       <h1>Log in to application</h1>
       <form>
         <label>username</label>
-        <input
+        <input id="username"
           onChange={(e) =>
             setLoginFormData({ ...loginFormData, username: e.target.value })
           }
@@ -16,7 +16,7 @@ const Login = ({ handleLoginForm, loginFormData, setLoginFormData }) => {
         ></input>
         <br />
         <label>password</label>
-        <input
+        <input id="password"
           onChange={(e) =>
             setLoginFormData({ ...loginFormData, password: e.target.value })
           }
@@ -26,7 +26,7 @@ const Login = ({ handleLoginForm, loginFormData, setLoginFormData }) => {
         ></input>
         <br />
 
-        <button onClick={handleLoginForm} type="submit">
+        <button id="loginBtn" onClick={handleLoginForm} type="submit">
           login
         </button>
       </form>
