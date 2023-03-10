@@ -160,7 +160,7 @@ const App = () => {
       <h3 style={{ display: "inline" }}>{name} logged in</h3>
       <button onClick={logOut}>logout</button>
       <br />
-      <button
+      <button id="open-blog-form"
         type="button"
         onClick={() => setDisplayBlogForm(!displayBlogForm)}
       >
