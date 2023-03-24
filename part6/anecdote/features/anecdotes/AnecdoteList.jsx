@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { vote } from "./anecdotesSlice";
 
-const AnecdoteList = () => {
+const AnecdoteList = ({ filter }) => {
   const dispatch = useDispatch();
-  const { anecdotes, votes } = useSelector((store) => store.anecdotes);
+  let { anecdotes, votes } = useSelector((store) => store.anecdotes);
+  anecdotes = anecdotes.filter((a) => a.includes(filter.toLowerCase()));
+
   return (
     <div>
       {anecdotes.map((a, i) => (
