@@ -12,6 +12,9 @@ const statsSlice = createSlice({
   reducers: {
     feedback: (state, action) => {
       const key = action.payload;
+      if (!key) {
+        return (state = initialState);
+      }
       state[key] += 1;
     },
   },

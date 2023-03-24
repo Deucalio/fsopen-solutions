@@ -15,6 +15,7 @@ function App() {
           </button>
         );
       })}
+      <button onClick={() => dispatch(feedback())}>reset stats</button>
 
       <p>good {stats.good}</p>
       <p>ok {stats.ok}</p>
