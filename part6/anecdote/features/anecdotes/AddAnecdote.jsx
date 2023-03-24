@@ -10,6 +10,7 @@ const AddAnecdote = () => {
     if (anecdote) {
       dispatch(addNewAnecdote(anecdote));
       setAnecdote("");
+      
     }
   };
 
