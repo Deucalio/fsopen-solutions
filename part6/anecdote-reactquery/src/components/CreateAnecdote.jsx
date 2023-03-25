@@ -3,12 +3,14 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import axios from "axios";
+import { NotificationContext } from "../App";
 
 export default function CreatePost() {
   const anecdoteRef = useRef();
   const queryClient = useQueryClient();
+  const [notification, dispatch] = useContext(NotificationContext);
 
   const createPostMutation = useMutation({
     mutationFn: async ({ anecdote }) => {
@@ -26,8 +28,12 @@ export default function CreatePost() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const anecdote = anecdoteRef.current.value;
+    if (anecdote.length < 5) {
+      return dispatch({ type: "error" });
+    }
     createPostMutation.mutate({
-      anecdote: anecdoteRef.current.value,
+      anecdote: anecdote,
     });
   }
 

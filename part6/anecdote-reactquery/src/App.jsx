@@ -21,6 +21,8 @@ const reducer = (notification, action) => {
       return `anecdote '${action.payload.anecdote}' voted`;
     case "hide":
       return "";
+    case "error":
+      return "too short anecdote, must have length of 5 or more"
     default:
       notification;
   }
@@ -29,7 +31,6 @@ export const NotificationContext = createContext([]);
 
 function App() {
   const [notification, dispatch] = useReducer(reducer, "");
-  console.log("n", notification);
 
   useEffect(() => {
     let timeout = setTimeout(() => {
@@ -80,9 +81,8 @@ function App() {
       <h1>Anecdotes app</h1>
       <NotificationContext.Provider value={[notification, dispatch]}>
         {notification !== "" && <Notification />}
+        <CreateAnecdote />
       </NotificationContext.Provider>
-
-      <CreateAnecdote />
 
       {anecdotesQuery.data.map((a) => {
         return (
