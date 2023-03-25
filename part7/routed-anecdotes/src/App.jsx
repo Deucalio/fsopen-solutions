@@ -43,7 +43,7 @@ const App = () => {
       info: "http://wiki.c2.com/?PrematureOptimization",
       votes: 0,
       id: 2,
-      
+
     },
   ]);
 
@@ -67,6 +67,7 @@ const App = () => {
         <p>a new anecdote {anecdotes[0].content} created</p>
       )}
       <Menu />
+      
       <Routes>
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route
