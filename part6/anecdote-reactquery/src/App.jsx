@@ -1,4 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useState } from "react";
 import axios from "axios";
 import CreateAnecdote from "./components/CreateAnecdote";
@@ -12,8 +17,28 @@ function App() {
         .then((res) => res.data);
     },
   });
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const queryClient = useQueryClient();
+
+  const createPostMutation = useMutation({
+    mutationFn: async ({ anecdote }) => {
+      const res = await axios.put(
+        `http://localhost:3001/anecdotes/${anecdote.id}`,
+        {
+          ...anecdote,
+          votes: anecdote.votes + 1,
+        }
+      );
+      return res.data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["anecdotes"], { exact: true });
+    },
+  });
+
+  const increaseVote = async (anecdote) => {
+    createPostMutation.mutate({
+      anecdote,
+    });
   };
 
   if (anecdotesQuery.status === "loading") return <h1>Loading</h1>;
@@ -37,7 +62,7 @@ function App() {
             {a.content}
             <br />
             <span>has {a.votes}</span>
-            <button>vote</button>
+            <button onClick={() => increaseVote(a)}>vote</button>
           </p>
         );
       })}

@@ -20,7 +20,6 @@ export default function CreatePost() {
       return res.data;
     },
     onSuccess: (data) => {
-      //   queryClient.setQueryData(["anecdotes", data.id], data);
       queryClient.invalidateQueries(["anecdotes"], { exact: true });
     },
   });
