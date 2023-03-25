@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import axios from "axios";
+import CreateAnecdote from "./components/CreateAnecdote";
 
 function App() {
   const anecdotesQuery = useQuery({
@@ -11,6 +12,9 @@ function App() {
         .then((res) => res.data);
     },
   });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   if (anecdotesQuery.status === "loading") return <h1>Loading</h1>;
   if (anecdotesQuery.status === "loading")
@@ -19,20 +23,24 @@ function App() {
   return (
     <div className="App">
       <h1>Anecdotes app</h1>
-      <div>
-        {anecdotesQuery.data.map((a) => {
-          return (
-            <>
-              <p>
-                {a.content}
-                <br />
-                <span>has {a.votes}</span>
-                <button>vote</button>
-              </p>
-            </>
-          );
-        })}
-      </div>
+
+      {/* <form onSubmit={handleSubmit}>
+        <label>Create New</label>
+        <input type="text" />
+        <button>Create</button>
+      </form> */}
+      <CreateAnecdote />
+
+      {anecdotesQuery.data.map((a) => {
+        return (
+          <p key={a.id}>
+            {a.content}
+            <br />
+            <span>has {a.votes}</span>
+            <button>vote</button>
+          </p>
+        );
+      })}
     </div>
   );
 }
