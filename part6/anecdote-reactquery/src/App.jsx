@@ -4,11 +4,40 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import axios from "axios";
 import CreateAnecdote from "./components/CreateAnecdote";
+import Notification from "./components/Notification";
+
+const reducer = (notification, action) => {
+  switch (action.type) {
+    case "vote":
+      return `anecdote '${action.payload.anecdote}' voted`;
+    case "hide":
+      return "";
+    default:
+      notification;
+  }
+};
+export const NotificationContext = createContext([]);
 
 function App() {
+  const [notification, dispatch] = useReducer(reducer, "");
+  console.log("n", notification);
+
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      dispatch({ type: "hide" });
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, [notification]);
+
   const anecdotesQuery = useQuery({
     queryKey: ["anecdotes"],
     queryFn: () => {
@@ -36,6 +65,7 @@ function App() {
   });
 
   const increaseVote = async (anecdote) => {
+    dispatch({ type: "vote", payload: { anecdote: anecdote.content } });
     createPostMutation.mutate({
       anecdote,
     });
@@ -48,12 +78,10 @@ function App() {
   return (
     <div className="App">
       <h1>Anecdotes app</h1>
+      <NotificationContext.Provider value={[notification, dispatch]}>
+        {notification !== "" && <Notification />}
+      </NotificationContext.Provider>
 
-      {/* <form onSubmit={handleSubmit}>
-        <label>Create New</label>
-        <input type="text" />
-        <button>Create</button>
-      </form> */}
       <CreateAnecdote />
 
       {anecdotesQuery.data.map((a) => {
