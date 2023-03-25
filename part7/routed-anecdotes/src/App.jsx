@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Link,
   Navigate,
@@ -43,23 +43,17 @@ const App = () => {
       info: "http://wiki.c2.com/?PrematureOptimization",
       votes: 0,
       id: 2,
+      
     },
   ]);
-  const a = useParams();
-  console.log("a", a);
 
   const [notification, setNotification] = useState("");
-
-  const vote = (id) => {
-    const anecdote = anecdoteById(id);
-
-    const voted = {
-      ...anecdote,
-      votes: anecdote.votes + 1,
-    };
-
-    setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)));
-  };
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      setNotification("");
+    }, 8000);
+    return () => clearTimeout(timeout);
+  }, [notification]);
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000);
@@ -69,6 +63,9 @@ const App = () => {
   return (
     <>
       <h1>Software anecdotes</h1>
+      {notification !== "" && (
+        <p>a new anecdote {anecdotes[0].content} created</p>
+      )}
       <Menu />
       <Routes>
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
@@ -77,7 +74,12 @@ const App = () => {
           element={<Anecdote anecdotes={anecdotes} />}
         />
 
-        <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route
+          path="/create"
+          element={
+            <CreateNew setNotification={setNotification} addNew={addNew} />
+          }
+        />
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
