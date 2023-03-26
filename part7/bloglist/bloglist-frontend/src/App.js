@@ -9,12 +9,12 @@ import {
   hideNotification,
 } from "./features/notifications/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { allBlogs, increaseLike } from "./features/blogs/blogSlice";
-
+import { allBlogs } from "./features/blogs/blogSlice";
+import { activeUser } from "./features/name/nameSlice";
 const App = () => {
   const [user, setUser] = useState(null);
 
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
@@ -29,11 +29,13 @@ const App = () => {
   const dispatch = useDispatch();
   const { notification } = useSelector((store) => store);
   const { blogs } = useSelector((store) => store);
+  const { name } = useSelector((store) => store);
 
   const getBlogs = async (username) => {
     const users = await blogService.getAll();
     const blogs = users.find((u) => u.username === username);
-    setName(blogs.name);
+    // setName(blogs.name);
+    dispatch(activeUser(blogs.name));
     dispatch(allBlogs(blogs.blogs));
   };
 
