@@ -13,13 +13,19 @@ const CreateNew = ({ addNew, setNotification }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addNew({ content: content.value, author: author.value, info: info.value, votes: 0 });
+    addNew({
+      content: content.value,
+      author: author.value,
+      info: info.value,
+      votes: 0,
+    });
     setNotification("New");
     // setContent("");
     // setAuthor("");
     // setInfo("");
     navigate("/");
   };
+
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -42,13 +48,19 @@ const CreateNew = ({ addNew, setNotification }) => {
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info.value}
-            onChange={info.onChange}
-          />
+          <input name="info" value={info.value} onChange={info.onChange} />
         </div>
         <button>create</button>
+        <button
+          type="button"
+          onClick={() => {
+            content.reset();
+            author.reset();
+            info.reset();
+          }}
+        >
+          reset
+        </button>
       </form>
     </div>
   );
