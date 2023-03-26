@@ -1,10 +1,6 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useField } from "../useField";
 const CreateNew = ({ addNew, setNotification }) => {
-  // const [content, setContent] = useState("");
-  // const [author, setAuthor] = useState("");
-  // const [info, setInfo] = useState("");
   const content = useField("text");
   const author = useField("text");
   const info = useField("text");
@@ -20,9 +16,6 @@ const CreateNew = ({ addNew, setNotification }) => {
       votes: 0,
     });
     setNotification("New");
-    // setContent("");
-    // setAuthor("");
-    // setInfo("");
     navigate("/");
   };
 
