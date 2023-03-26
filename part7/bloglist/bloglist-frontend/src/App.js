@@ -4,9 +4,16 @@ import blogService from "./services/blogs";
 import Login from "./components/Login";
 import Form from "./components/Form";
 import axios from "axios";
+import {
+  showNotification,
+  hideNotification,
+} from "./features/notifications/notificationSlice";
+
+import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
   const [user, setUser] = useState(null);
+
   const [name, setName] = useState("");
   const [loginFormData, setLoginFormData] = useState({
     username: "",
@@ -18,8 +25,11 @@ const App = () => {
     url: "",
   });
   const [displayBlogForm, setDisplayBlogForm] = useState(false);
-  const [notification, setNotification] = useState(false);
+  // const [notification, setNotification] = useState(false);
   const [blogs, setBlogs] = useState([]);
+
+  const dispatch = useDispatch();
+  const { notification } = useSelector((store) => store);
 
   const getBlogs = async (username) => {
     const users = await blogService.getAll();
@@ -34,15 +44,13 @@ const App = () => {
     if (token) {
       getBlogs(username);
       setUser(true);
-      console.log("exists");
     } else {
-      console.log("doesn't exists");
     }
   }, [user]);
 
   useEffect(() => {
     setTimeout(() => {
-      setNotification(false);
+      dispatch(hideNotification());
     }, 3000);
   }, [notification]);
 
@@ -70,7 +78,8 @@ const App = () => {
   };
 
   const createBlog = async (e) => {
-    setNotification(true);
+    // setNotification(true);
+    dispatch(showNotification());
     e.preventDefault();
     const headers = {
       "Content-Type": "application/json",
@@ -90,7 +99,6 @@ const App = () => {
           headers: headers,
         }
       );
-      console.log(response.data);
       setBlogs([...blogs, response.data]);
     } catch (error) {
       console.log(error);
@@ -135,9 +143,9 @@ const App = () => {
     // alert("Are you sure you want that delete this blog", "yes")
     if (window.confirm("Are you sure you want this blog removed?")) {
       // remove it
-      setBlogs(blogs.filter(b => b.id !== id))
-      const req = await axios.delete(`http://localhost:3003/api/blogs/${id}`)
-      console.log(req.data)
+      setBlogs(blogs.filter((b) => b.id !== id));
+      const req = await axios.delete(`http://localhost:3003/api/blogs/${id}`);
+      console.log(req.data);
     } else {
       return 0;
     }
@@ -155,12 +163,13 @@ const App = () => {
 
   return (
     <div>
-      {notification && <h1>A new blog has been added</h1>}
+      {notification !== "" && <h1>A new blog has been added</h1>}
       <h2>blogs</h2>
       <h3 style={{ display: "inline" }}>{name} logged in</h3>
       <button onClick={logOut}>logout</button>
       <br />
-      <button id="open-blog-form"
+      <button
+        id="open-blog-form"
         type="button"
         onClick={() => setDisplayBlogForm(!displayBlogForm)}
       >
