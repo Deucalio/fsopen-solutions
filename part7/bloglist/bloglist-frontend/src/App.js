@@ -8,8 +8,8 @@ import {
   showNotification,
   hideNotification,
 } from "./features/notifications/notificationSlice";
-
 import { useDispatch, useSelector } from "react-redux";
+import { allBlogs, increaseLike } from "./features/blogs/blogSlice";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -25,17 +25,16 @@ const App = () => {
     url: "",
   });
   const [displayBlogForm, setDisplayBlogForm] = useState(false);
-  // const [notification, setNotification] = useState(false);
-  const [blogs, setBlogs] = useState([]);
 
   const dispatch = useDispatch();
   const { notification } = useSelector((store) => store);
+  const { blogs } = useSelector((store) => store);
 
   const getBlogs = async (username) => {
     const users = await blogService.getAll();
     const blogs = users.find((u) => u.username === username);
     setName(blogs.name);
-    setBlogs(blogs.blogs);
+    dispatch(allBlogs(blogs.blogs));
   };
 
   useEffect(() => {
@@ -78,7 +77,6 @@ const App = () => {
   };
 
   const createBlog = async (e) => {
-    // setNotification(true);
     dispatch(showNotification());
     e.preventDefault();
     const headers = {
@@ -99,7 +97,7 @@ const App = () => {
           headers: headers,
         }
       );
-      setBlogs([...blogs, response.data]);
+      // setBlogs([...blogs, response.data]);
     } catch (error) {
       console.log(error);
     }
@@ -116,10 +114,10 @@ const App = () => {
         return b;
       }
     });
-    setBlogs([...blog]);
+    dispatch(allBlogs(blog));
     try {
       const response = await axios.put(
-        "http://localhost:3003/api/blogs/64031c133b008512cc03a95e",
+        `http://localhost:3003/api/blogs/${String(blogId)}`,
         {
           likes: blogs.find((b) => b.id === blogId).likes + 1,
         }
@@ -135,7 +133,7 @@ const App = () => {
       if (a.likes < b.likes) return 1;
       return 0;
     });
-    setBlogs(sortedBlogs);
+    // setBlogs(sortedBlogs);
   };
 
   const deleteBlog = async (id) => {
@@ -143,7 +141,7 @@ const App = () => {
     // alert("Are you sure you want that delete this blog", "yes")
     if (window.confirm("Are you sure you want this blog removed?")) {
       // remove it
-      setBlogs(blogs.filter((b) => b.id !== id));
+      dispatch(allBlogs(blogs.filter((b) => b.id !== id)));
       const req = await axios.delete(`http://localhost:3003/api/blogs/${id}`);
       console.log(req.data);
     } else {
