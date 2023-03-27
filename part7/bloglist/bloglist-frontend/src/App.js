@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { allBlogs } from "./features/blogs/blogSlice";
 import { activeUser } from "./features/name/nameSlice";
+import { Link } from "react-router-dom";
 const App = () => {
   const [user, setUser] = useState(null);
 
@@ -163,7 +164,9 @@ const App = () => {
 
   return (
     <div>
-     
+      <Link to="/users">
+        <p>users</p>
+      </Link>
 
       {notification !== "" && <h1>A new blog has been added</h1>}
       <h2>blogs</h2>

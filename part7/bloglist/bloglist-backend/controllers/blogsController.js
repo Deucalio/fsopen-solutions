@@ -1,5 +1,6 @@
 const Blog = require("../models/blog");
 const User = require("../models/User");
+const Comment = require("../models/Comments");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -12,7 +13,7 @@ const getTokenFrom = (request) => {
 };
 
 exports.getAllBlogs = async (req, res) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).populate("comments");
   res.status(200).json(blogs);
 };
 
@@ -88,7 +89,6 @@ exports.logUserIn = async (req, res) => {
     id: user._id,
   };
 
-
   const token = jwt.sign(userForToken, process.env.SECRET);
 
   res.status(200).send({ token, username: user.username, name: user.name });
@@ -99,7 +99,7 @@ exports.updateLikes = async (req, res) => {
   const updatedBlog = await Blog.findByIdAndUpdate(id, {
     likes: req.body.likes,
   });
-  
+
   res.status(204).end();
 };
 
@@ -107,4 +107,22 @@ exports.deleteABlog = async (req, res) => {
   const { id } = req.params;
   await Blog.findByIdAndDelete(id);
   res.status(204).end();
+};
+
+exports.addAComment = async (req, res) => {
+  const { comment, blogId } = req.body;
+  if (!comment) {
+    return res.status(400);
+  }
+  console.log("user", comment);
+
+  const newComment = new Comment({
+    comment,
+  });
+  const blog = await Blog.findById(blogId);
+
+  blog.comments.push(newComment);
+  await newComment.save();
+  await blog.save();
+  res.status(201).json(blog);
 };
