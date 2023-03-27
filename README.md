@@ -15,4 +15,4 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
 
 
 # Course Certificates
-<p align="center"><img height="60%" width="100%" src="./certificates/part0-7.png" alt="FullStack Certificate"></p>
+![alt text](./certificates//part0-7.png)
