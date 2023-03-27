@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 const Blog = ({ deleteBlog, updateLike, blog }) => {
   const [displayDetails, setDisplayDetails] = useState(false);
 
@@ -13,8 +14,14 @@ const Blog = ({ deleteBlog, updateLike, blog }) => {
         border: "1.5px double grey ",
       }}
     >
-      {blog.title}{" "}
-      <button className="displayInfo" onClick={() => setDisplayDetails(!displayDetails)}>
+      <Link to={`/blogs/${blog.id}`}>
+        <p>{blog.title} </p>
+      </Link>
+
+      <button
+        className="displayInfo"
+        onClick={() => setDisplayDetails(!displayDetails)}
+      >
         {displayDetails ? "hide" : "view"}
       </button>
       {displayDetails && (
@@ -22,10 +29,15 @@ const Blog = ({ deleteBlog, updateLike, blog }) => {
           <div>
             <p>{blog.url}</p>
             likes: {blog.likes}
-            <button id="likeBtn" type="button" onClick={() => updateLike(blog.id)}>
+            <button
+              id="likeBtn"
+              type="button"
+              onClick={() => updateLike(blog.id)}
+            >
               like
             </button>
-            <button id="removeBtn"
+            <button
+              id="removeBtn"
               onClick={() => deleteBlog(blog.id)}
               style={{
                 cursor: "pointer",

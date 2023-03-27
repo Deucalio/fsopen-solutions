@@ -3,7 +3,6 @@ import React from "react";
 const Form = ({ createBlog, blogForm, setBlogForm }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setBlogForm({ ...blogForm, [name]: value });
   };
 

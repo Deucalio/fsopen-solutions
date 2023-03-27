@@ -30,6 +30,9 @@ const Users = () => {
 
   return (
     <div>
+      <Link to="/">
+        <p>home</p>
+      </Link>
       <h1>blogs</h1>
       <p>{name} logged in</p>
       <br />
