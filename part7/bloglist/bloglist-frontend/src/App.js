@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
@@ -34,7 +35,6 @@ const App = () => {
   const getBlogs = async (username) => {
     const users = await blogService.getAll();
     const blogs = users.find((u) => u.username === username);
-    // setName(blogs.name);
     dispatch(activeUser(blogs.name));
     dispatch(allBlogs(blogs.blogs));
   };
@@ -163,6 +163,8 @@ const App = () => {
 
   return (
     <div>
+     
+
       {notification !== "" && <h1>A new blog has been added</h1>}
       <h2>blogs</h2>
       <h3 style={{ display: "inline" }}>{name} logged in</h3>
