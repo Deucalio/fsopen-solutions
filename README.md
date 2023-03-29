@@ -1,4 +1,4 @@
-# Full Stack Open
+## Full Stack Open
 
 This repository serves as my assignement submissions for Full Stack Open course offered by the University of Helsinki
 https://fullstackopen.com/en/
@@ -14,5 +14,5 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
 -  Docker Containers, lightweight virtualization technology and an open-source app container engine that can easily package apps into portable containers.
 
 
-# Course Certificates
+### Course Certificates
 ![alt text](./certificates//part0-7.png)
